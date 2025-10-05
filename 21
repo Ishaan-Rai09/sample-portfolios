@@ -1,0 +1,70 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { Briefcase } from 'lucide-react';
+
+const experiences = [
+  {
+    role: 'Senior Creative Developer',
+    company: 'Innovatech Solutions',
+    date: '2022 - Present',
+    description: 'Led development of interactive web experiences, mentored junior developers, and drove adoption of modern frontend technologies.',
+  },
+  {
+    role: 'Full-Stack Developer',
+    company: 'DigitalCrafters Inc.',
+    date: '2020 - 2022',
+    description: 'Developed and maintained full-stack applications, collaborating with cross-functional teams to deliver high-quality products.',
+  },
+  {
+    role: 'Frontend Developer',
+    company: 'WebWeavers Co.',
+    date: '2018 - 2020',
+    description: 'Translated UI/UX designs into responsive, high-performance code and contributed to the component library.',
+  },
+];
+
+const Experience: React.FC = () => {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+
+  return (
+    <section id="experience" className="py-24" ref={ref}>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.8 }}
+      >
+        <h2 className="text-4xl font-bold text-center mb-12">
+          Career <span className="gradient-text">Timeline</span>
+        </h2>
+        <div className="relative max-w-3xl mx-auto">
+          <div className="absolute left-1/2 -translate-x-1/2 w-1 h-full bg-slate-700"></div>
+          {experiences.map((exp, index) => (
+            <motion.div
+              key={index}
+              className="mb-12 flex items-center w-full"
+              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.6, delay: index * 0.3 }}
+            >
+              <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8'}`}>
+                <div className="glass-card p-6">
+                  <p className="text-accent-cyan font-semibold mb-1">{exp.date}</p>
+                  <h3 className="text-xl font-bold text-slate-100 mb-2">{exp.role}</h3>
+                  <p className="text-slate-400 font-medium mb-3">{exp.company}</p>
+                  <p className="text-slate-300 text-sm">{exp.description}</p>
+                </div>
+              </div>
+              <div className="absolute left-1/2 -translate-x-1/2 w-8 h-8 bg-slate-800 border-4 border-accent-blue rounded-full flex items-center justify-center">
+                <Briefcase size={16} className="text-accent-blue" />
+              </div>
+              <div className={`w-1/2 ${index % 2 === 0 ? '' : 'text-right'}`}></div>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+    </section>
+  );
+};
+
+export default Experience;

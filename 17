@@ -1,0 +1,61 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+import { ArrowDown, Download } from 'lucide-react';
+
+const Hero: React.FC = () => {
+  return (
+    <section id="home" className="h-screen flex flex-col justify-center items-center text-center relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-accent-purple/10 via-transparent to-accent-cyan/10 animate-gradient-bg bg-400% -z-10" />
+      
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="animate-float"
+      >
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold mb-4">
+          <span className="bg-gradient-to-r from-accent-blue via-accent-cyan to-white bg-clip-text text-transparent">Ishaan Rai</span>
+        </h1>
+        <motion.p 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="text-xl md:text-2xl lg:text-3xl font-medium text-slate-300 mb-2"
+        >
+          Creative Full-Stack Developer
+        </motion.p>
+        <motion.p 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="max-w-2xl mx-auto text-slate-400 mb-8"
+        >
+          Crafting beautiful, functional, and user-centric digital experiences from concept to deployment.
+        </motion.p>
+      </motion.div>
+
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.9 }}
+        className="flex flex-col sm:flex-row gap-4"
+      >
+        <button 
+          onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+          className="bg-accent-blue hover:bg-accent-blue/90 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 shadow-lg shadow-accent-blue/20 flex items-center justify-center gap-2"
+        >
+          View My Work <ArrowDown size={20} className="transform -rotate-90" />
+        </button>
+        <a 
+          href="/ishaan-rai-resume.pdf" // Placeholder
+          download
+          className="bg-slate-700/50 hover:bg-slate-700 text-slate-200 font-bold py-3 px-6 rounded-full transition-all duration-300 border border-slate-600 flex items-center justify-center gap-2"
+        >
+          <Download size={20} /> Download Resume
+        </a>
+      </motion.div>
+    </section>
+  );
+};
+
+export default Hero;

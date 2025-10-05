@@ -1,0 +1,55 @@
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { Github, Linkedin, Twitter, Send } from 'lucide-react';
+
+const Contact: React.FC = () => {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
+  const [status, setStatus] = useState('');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('Sending...');
+    // Mock form submission
+    setTimeout(() => {
+      setStatus('Message Sent!');
+      // Reset form or state here
+    }, 2000);
+  };
+
+  return (
+    <section id="contact" className="py-24" ref={ref}>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.8 }}
+      >
+        <h2 className="text-4xl font-bold text-center mb-4">
+          Get In <span className="gradient-text">Touch</span>
+        </h2>
+        <p className="text-center max-w-2xl mx-auto text-slate-400 mb-12">
+          Have a project in mind or just want to say hello? My inbox is always open.
+        </p>
+        <div className="max-w-xl mx-auto">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <input type="text" placeholder="Your Name" required className="w-full p-4 bg-slate-800 rounded-lg border border-slate-700 focus:outline-none focus:ring-2 focus:ring-accent-blue transition-all" />
+            <input type="email" placeholder="Your Email" required className="w-full p-4 bg-slate-800 rounded-lg border border-slate-700 focus:outline-none focus:ring-2 focus:ring-accent-blue transition-all" />
+            <textarea placeholder="Your Message" rows={5} required className="w-full p-4 bg-slate-800 rounded-lg border border-slate-700 focus:outline-none focus:ring-2 focus:ring-accent-blue transition-all"></textarea>
+            <div className="text-center">
+              <button type="submit" className="bg-accent-blue hover:bg-accent-blue/90 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 shadow-lg shadow-accent-blue/20 flex items-center justify-center gap-2 mx-auto">
+                {status ? status : <>Send Message <Send size={18} /></>}
+              </button>
+            </div>
+          </form>
+          <div className="flex justify-center gap-6 mt-12">
+            <a href="#" className="text-slate-400 hover:text-accent-cyan transition-colors"><Github size={28} /></a>
+            <a href="#" className="text-slate-400 hover:text-accent-cyan transition-colors"><Linkedin size={28} /></a>
+            <a href="#" className="text-slate-400 hover:text-accent-cyan transition-colors"><Twitter size={28} /></a>
+          </div>
+        </div>
+      </motion.div>
+    </section>
+  );
+};
+
+export default Contact;

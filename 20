@@ -1,0 +1,90 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { Github, ExternalLink } from 'lucide-react';
+
+const projects = [
+  {
+    title: 'Project Alpha',
+    description: 'A cutting-edge web application for seamless project management and collaboration.',
+    tech: ['React', 'Node.js', 'GraphQL', 'Tailwind CSS'],
+    image: 'https://img-wrapper.vercel.app/image?url=https://placehold.co/600x400/0f172a/3b82f6?text=Project+Alpha',
+    live: '#',
+    repo: '#',
+  },
+  {
+    title: 'Project Beta',
+    description: 'An e-commerce platform with a focus on user experience and performance.',
+    tech: ['Next.js', 'TypeScript', 'Stripe', 'PostgreSQL'],
+    image: 'https://img-wrapper.vercel.app/image?url=https://placehold.co/600x400/0f172a/06b6d4?text=Project+Beta',
+    live: '#',
+    repo: '#',
+  },
+  {
+    title: 'Project Gamma',
+    description: 'A data visualization dashboard for analyzing complex datasets in real-time.',
+    tech: ['React', 'D3.js', 'Python', 'Flask'],
+    image: 'https://img-wrapper.vercel.app/image?url=https://placehold.co/600x400/0f172a/8b5cf6?text=Project+Gamma',
+    live: '#',
+    repo: '#',
+  },
+  {
+    title: 'Project Delta',
+    description: 'A mobile-first social media application connecting like-minded individuals.',
+    tech: ['React Native', 'Firebase', 'Redux'],
+    image: 'https://img-wrapper.vercel.app/image?url=https://placehold.co/600x400/0f172a/f59e0b?text=Project+Delta',
+    live: '#',
+    repo: '#',
+  },
+];
+
+const Projects: React.FC = () => {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+
+  return (
+    <section id="projects" className="py-24" ref={ref}>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.8 }}
+      >
+        <h2 className="text-4xl font-bold text-center mb-12">
+          Featured <span className="gradient-text">Projects</span>
+        </h2>
+        <div className="grid md:grid-cols-2 gap-8">
+          {projects.map((project, index) => (
+            <motion.div
+              key={project.title}
+              initial={{ opacity: 0, y: 50 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
+              className="glass-card overflow-hidden group"
+            >
+              <div className="relative overflow-hidden">
+                <img src={project.image} alt={project.title} className="w-full h-60 object-cover group-hover:scale-105 transition-transform duration-300" />
+                <div className="absolute inset-0 bg-black/50 group-hover:bg-black/70 transition-all duration-300"></div>
+              </div>
+              <div className="p-6">
+                <h3 className="text-2xl font-bold mb-2 text-slate-100">{project.title}</h3>
+                <p className="text-slate-400 mb-4">{project.description}</p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {project.tech.map(t => <span key={t} className="bg-slate-700 text-accent-cyan text-xs font-semibold px-2 py-1 rounded-full">{t}</span>)}
+                </div>
+                <div className="flex gap-4">
+                  <a href={project.live} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-slate-300 hover:text-accent-blue transition-colors">
+                    <ExternalLink size={20} /> Live Demo
+                  </a>
+                  <a href={project.repo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-slate-300 hover:text-accent-blue transition-colors">
+                    <Github size={20} /> GitHub
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+    </section>
+  );
+};
+
+export default Projects;
